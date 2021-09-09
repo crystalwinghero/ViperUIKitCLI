@@ -13,6 +13,7 @@ public final class ViperUIKitCLITool {
     
     enum Error : Swift.Error {
         case invalidArguments
+        case invalidModuleName
         case failedToCreateFile
     }
     
@@ -66,17 +67,15 @@ Run:
     }
     
     private func createTemplate(_ name : String, _ isTableView : Bool) throws {
-        print(#function, name, isTableView)
-        var e = name.isEmpty ? "Untitled" : name
-        var module = e
-        let sub = e.split(maxSplits: 1, omittingEmptySubsequences: true, whereSeparator: { $0 == "." })
-        if sub.count > 0 {
-            module = "\(sub[0])"
-            e = "\(sub.last ?? Substring(""))"
+        let sub = name.split(maxSplits: 1, omittingEmptySubsequences: true, whereSeparator: { $0 == "." })
+        guard sub.count == 2 else {
+            throw Error.invalidModuleName
         }
+        let module = "\(sub[0])"
+        let e = "\(sub[1])"
         do {
             let current = Folder.documents ?? Folder.current
-            print("Current path: \(current.path)")
+            print("Target path: \(current.path)")
             print("Creating folder: \(e) ...")
             let folder = try current.createSubfolder(named: e)
             print("Creating VIPER file...")

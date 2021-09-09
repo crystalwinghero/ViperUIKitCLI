@@ -101,10 +101,10 @@ class \(name)ViewController : UIViewController, \(isTableView ? "Table" : "")Pre
     static func xib(_ name : String, _ module : String) -> String {
         return """
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -119,17 +119,8 @@ class \(name)ViewController : UIViewController, \(isTableView ? "Table" : "")Pre
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="tkM-wH-pz4">
-                    <rect key="frame" x="188.5" y="429.5" width="37" height="37"/>
-                </activityIndicatorView>
-            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <constraints>
-                <constraint firstItem="tkM-wH-pz4" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="7Ov-1D-RsH"/>
-                <constraint firstItem="tkM-wH-pz4" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="iCS-u8-6rF"/>
-            </constraints>
             <point key="canvasLocation" x="20" y="85"/>
         </view>
     </objects>
@@ -139,6 +130,7 @@ class \(name)ViewController : UIViewController, \(isTableView ? "Table" : "")Pre
         </systemColor>
     </resources>
 </document>
+
 
 """
     }
