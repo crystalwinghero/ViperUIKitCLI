@@ -13,7 +13,7 @@ struct Template {
 import Foundation
 import ViperUIKit
 
-struct \(name)Viper : BaseViper {
+struct \(name)Viper : ViperUIKit.BaseViper {
     typealias View = \(name)ViewController
     typealias Interactor = \(name)Interactor
     typealias Presenter = \(name)Presenter
@@ -28,7 +28,7 @@ struct \(name)Viper : BaseViper {
 import UIKit
 import ViperUIKit
 
-class \(name)ViewController : UIViewController, \(isTableView ? "Table" : "")PresentableView {
+class \(name)ViewController : UIViewController, ViperUIKit.\(isTableView ? "Table" : "")PresentableView {
     //1. declare type
     typealias Viper = \(name)Viper
 
@@ -139,7 +139,7 @@ class \(name)ViewController : UIViewController, \(isTableView ? "Table" : "")Pre
         return """
 import ViperUIKit
 
-struct \(name)Interactor : BaseInteractor {
+struct \(name)Interactor : ViperUIKit.BaseInteractor {
     typealias Input = Any
     typealias Response = Any
     
@@ -158,7 +158,7 @@ import UIKit
 import ViperUIKit
 
 ///NOTE: mark as final class + inherits from NSObject
-final class \(name)Presenter : NSObject, Base\(isTableView ? "Table" : "")Presenter {
+final class \(name)Presenter : NSObject, ViperUIKit.Base\(isTableView ? "Table" : "")Presenter {
     //1. declare type
     typealias Viper = \(name)Viper
     
@@ -185,6 +185,26 @@ final class \(name)Presenter : NSObject, Base\(isTableView ? "Table" : "")Presen
     }
 }
 
+\(isTableView ? tableExtension(name) : "")
+"""
+    }
+    
+    static func tableExtension(_ name : String) -> String {
+        return """
+extension \(name)Presenter : UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1 //TODO: change
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1 //TODO: change
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()  //TODO: change
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
 """
     }
     
@@ -193,7 +213,7 @@ final class \(name)Presenter : NSObject, Base\(isTableView ? "Table" : "")Presen
 import Foundation
 import ViperUIKit
 
-struct \(name)Entity : BaseEntity {
+struct \(name)Entity : ViperUIKit.BaseEntity {
     typealias PK = Int
     var pk : PK { id }
     var id : Int
@@ -207,7 +227,7 @@ struct \(name)Entity : BaseEntity {
 import UIKit
 import ViperUIKit
 
-struct \(name)Router : BaseRouter {
+struct \(name)Router : ViperUIKit.BaseRouter {
     typealias Viper = \(name)Viper
     
 }

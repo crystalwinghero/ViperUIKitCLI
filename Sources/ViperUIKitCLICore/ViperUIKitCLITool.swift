@@ -60,8 +60,8 @@ public final class ViperUIKitCLITool {
     private func showHelp() {
         let instruction = """
 Run:
-./ViperUIKitCLI <ModuleName>.<ViperName> #for normal UIViewController
-./ViperUIKitCLI --table <ModuleName>.<ViperName> #for UIViewController with UITableView embeded
+viper-uikit-cli <ModuleName>.<ViperName> #for normal UIViewController
+viper-uikit-cli --table <ModuleName>.<ViperName> #for UIViewController with UITableView embeded
 """
         print(instruction)
     }
