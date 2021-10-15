@@ -5,7 +5,8 @@ A Swift CLI Tool for generating template files for [ViperUIKit](https://github.c
 ### Compatibility
 | ViperUIKitCLI version | ViperUIKit version |
 | --- | --- |
-| 1.0.1 | 1.1.1+ |
+| 1.0.2 | 1.1.1 |
+| 1.0.3 | 1.1.2+ |
 
 ### Installation 
 copy cli to your local bin exec directory, run:

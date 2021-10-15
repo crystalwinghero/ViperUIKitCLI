@@ -169,19 +169,44 @@ final class \(name)Presenter : NSObject, ViperUIKit.Base\(isTableView ? "Table" 
     var router: Viper.Router!
     var item : Viper.Entity?
     var list : [Viper.Entity] = []
+
+    \(isTableView ? self.componentDeclaration() : "")
     
     //3. default methods
+    /// This should be called one time on your viewController when starting the screen
+    /// i.e. viewDidLoad()
     func setup() {
         //TODO: add your setup, i.e. navigation title, tableview data source, etc.
     }
+
+    /// This should be called one time on your viewController when destroying
+    /// i.e. deinit()
+    func tearDown() {
+        //TODO: add your tear down, i.e. stop timer, release strong ref, etc.
+    }
+
+    /// This should be called when it's necessary to fetch/update UI content
+    /// i.e. viewWillAppear()
     func loadContent() {
         //TODO: fetch your data
-        interactor.fetch { (_) in
+        interactor.fetch { [weak self] (_) in
             //TODO: refresh UI
+            self?.reloadUI()
         }
     }
+    /// This is similar to loadContent(), but responsible to refresh logic
+    /// i.e. pullToRefresh with a conditional API throttle
     func reloadContent() {
         //TODO: add reload method
+    }
+
+    \(isTableView ? self.buildComponentMethod() : "" )
+
+    /// This should be called to purely refresh UI content without any business logic
+    private func reloadUI() {
+        //TODO: refresh UI data
+        \(isTableView ? "self.buildComponents()" : "" )
+        \(isTableView ? "self.tableView.reloadData()" : "")
     }
 }
 
@@ -189,20 +214,55 @@ final class \(name)Presenter : NSObject, ViperUIKit.Base\(isTableView ? "Table" 
 """
     }
     
+    static func componentDeclaration() -> String {
+        return """
+        //NOTE: Please change `Component` to suit your view structure
+        enum Component {
+            case space(CGFloat)
+            case header(String?)
+        }
+        /// components object for tableView structure
+        var components : [[Component]] = []
+"""
+    }
+    static func buildComponentMethod() -> String {
+        return """
+        /// Build components block according to screen's current logic
+        func buildComponents() {
+            //TODO: add logic for components UI
+            self.components = [
+                [.header("Hello, World!")],
+            ]
+        }
+"""
+    }
+    
     static func tableExtension(_ name : String) -> String {
         return """
 extension \(name)Presenter : UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 //TODO: change
+        return self.components.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 //TODO: change
+        return self.components[section].count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()  //TODO: change
+        //TODO: change
+        let component = components[indexPath.section][indexPath.row]
+        switch component {
+        case .space(_):
+            return UITableViewCell()
+        default:
+            return UITableViewCell()
+        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        //TODO: change
+        let component = components[indexPath.section][indexPath.row]
+        switch component {
+        case .space(let h): return h
+        default: return UITableView.automaticDimension
+        }
     }
 }
 """
